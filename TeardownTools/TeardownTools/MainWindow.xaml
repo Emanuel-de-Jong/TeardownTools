@@ -4,9 +4,118 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeardownTools"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="MainWindow" Height="800" Width="1000"
+        WindowStyle="None" AllowsTransparency="True"
+        Background="#FF2D2D2D" 
+        >
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="BorderBrush" Value="#FF0A0A0A"/>
+            <Setter Property="BorderThickness" Value="4"/>
+            <Setter Property="Background" Value="#3B3B3B"/>
+            <Setter Property="Margin" Value="20, 0"/>
+            <Setter Property="Foreground" Value="#FFC1C1C1"/>
+            <Setter Property="FontSize" Value="25"/>
+        </Style>
+        <Style TargetType="CheckBox">
+        </Style>
+        <Style TargetType="ComboBox">
+        </Style>
+        <Style TargetType="Image">
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="#FFC1C1C1"/>
+        </Style>
+        <Style TargetType="ListBox">
+        </Style>
+        <Style TargetType="StackPanel">
+        </Style>
+        <Style TargetType="Slider">
+        </Style>
+        <Style TargetType="Border">
+            <Setter Property="BorderBrush" Value="#FF0A0A0A"/>
+            <Setter Property="BorderThickness" Value="4"/>
+        </Style>
+
+        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button" x:Key="ClickableIcon" >
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="FontSize" Value="50"/>
+            <Setter Property="Foreground" Value="#FFC1C1C1"/>
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="30, 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="15*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+        <Grid Grid.Column="0" x:Name="TitleBar" MouseDown="TitleBar_MouseDown">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="70" />
+                <ColumnDefinition Width="70" />
+                <ColumnDefinition Width="70" />
+            </Grid.ColumnDefinitions>
+
+            <Label Content="TeardownTools" FontSize="50" VerticalAlignment="Center" FontFamily="Rockwell" />
+
+            <Button Grid.Column="1" Style="{StaticResource ClickableIcon}" x:Name="MinimizeButton" Content="-" Click="MinimizeButton_Click" />
+            <Button Grid.Column="2" Style="{StaticResource ClickableIcon}" x:Name="MaximizeButton" Content="O" Click="MaximizeButton_Click" />
+            <Button Grid.Column="3" Style="{StaticResource ClickableIcon}" x:Name="CloseButton" Content="X" Click="CloseButton_Click" />
+        </Grid>
+
         
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*" />
+                <ColumnDefinition Width="8*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Margin="0, 0, 15, 0">
+                <ItemsControl Background="#464646">
+                
+                </ItemsControl>
+            </Border>
+
+            <Border Grid.Column="1" Margin="15, 0, 0, 0">
+                <StackPanel Background="#3B3B3B">
+                
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="1" Grid.Column="0" Content="Uninstall All" />
+
+            <Label Grid.Row="1" Grid.Column="3" Content="V0.1" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="18" />
+        </Grid>
     </Grid>
 </Window>
