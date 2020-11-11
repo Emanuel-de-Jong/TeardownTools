@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeardownTools"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="800" Width="1000"
+        Title="TeardownTools" Height="800" Width="1000"
         WindowStyle="None" AllowsTransparency="True"
         Background="#FF2D2D2D" 
         >
@@ -40,10 +40,10 @@
         </Style>
 
         <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button" x:Key="ClickableIcon" >
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Width" Value="45"/>
             <Setter Property="Margin" Value="0"/>
             <Setter Property="Background" Value="{x:Null}"/>
-            <Setter Property="FontSize" Value="50"/>
-            <Setter Property="Foreground" Value="#FFC1C1C1"/>
             <Setter Property="BorderBrush" Value="{x:Null}"/>
         </Style>
     </Window.Resources>
@@ -72,9 +72,15 @@
 
             <Label Content="TeardownTools" FontSize="50" VerticalAlignment="Center" FontFamily="Rockwell" />
 
-            <Button Grid.Column="1" Style="{StaticResource ClickableIcon}" x:Name="MinimizeButton" Content="-" Click="MinimizeButton_Click" />
-            <Button Grid.Column="2" Style="{StaticResource ClickableIcon}" x:Name="MaximizeButton" Content="O" Click="MaximizeButton_Click" />
-            <Button Grid.Column="3" Style="{StaticResource ClickableIcon}" x:Name="CloseButton" Content="X" Click="CloseButton_Click" />
+            <Button Grid.Column="1" Style="{StaticResource ClickableIcon}" x:Name="MinimizeButton" Click="MinimizeButton_Click">
+                <Image Source="images/minimize.png" />
+            </Button>
+            <Button Grid.Column="2" Style="{StaticResource ClickableIcon}" x:Name="MaximizeButton" Click="MaximizeButton_Click">
+                <Image Source="images/maximize.png" />
+            </Button>
+            <Button Grid.Column="3" Style="{StaticResource ClickableIcon}" x:Name="CloseButton" Click="CloseButton_Click">
+                <Image Source="images/close.png" />
+            </Button>
         </Grid>
 
         
