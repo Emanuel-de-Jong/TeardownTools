@@ -97,7 +97,15 @@
   <ItemGroup>
     <Resource Include="images\close.png" />
     <Resource Include="images\maximize.png" />
+    <Resource Include="images\resize.png" />
     <Resource Include="images\minimize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\placeholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\install.png" />
+    <Resource Include="images\uninstall.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

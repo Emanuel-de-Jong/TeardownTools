@@ -12,14 +12,29 @@
 
     <Window.Resources>
         <Style TargetType="Button">
-            <Setter Property="BorderBrush" Value="#FF0A0A0A"/>
-            <Setter Property="BorderThickness" Value="4"/>
             <Setter Property="Background" Value="#3B3B3B"/>
             <Setter Property="Margin" Value="20, 0"/>
             <Setter Property="Foreground" Value="#FFC1C1C1"/>
             <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="#FF0A0A0A" BorderThickness="4">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF2D2D2D"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
-        <Style TargetType="CheckBox">
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FFC1C1C1"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
         <Style TargetType="ComboBox">
         </Style>
@@ -41,10 +56,28 @@
 
         <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button" x:Key="ClickableIcon" >
             <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="Width" Value="45"/>
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="40"/>
             <Setter Property="Margin" Value="0"/>
             <Setter Property="Background" Value="{x:Null}"/>
-            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{x:Null}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="0.6"/>
+                    <Setter Property="Background" Value="{x:Null}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.3"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
 
@@ -73,13 +106,13 @@
             <Label Content="TeardownTools" FontSize="50" VerticalAlignment="Center" FontFamily="Rockwell" />
 
             <Button Grid.Column="1" Style="{StaticResource ClickableIcon}" x:Name="MinimizeButton" Click="MinimizeButton_Click">
-                <Image Source="images/minimize.png" />
+                <Image x:Name="MinimizeImage" Source="images/minimize.png" />
             </Button>
             <Button Grid.Column="2" Style="{StaticResource ClickableIcon}" x:Name="MaximizeButton" Click="MaximizeButton_Click">
-                <Image Source="images/maximize.png" />
+                <Image x:Name="MaximizeImage" Source="images/maximize.png" />
             </Button>
             <Button Grid.Column="3" Style="{StaticResource ClickableIcon}" x:Name="CloseButton" Click="CloseButton_Click">
-                <Image Source="images/close.png" />
+                <Image x:Name="CloseImage" Source="images/close.png" />
             </Button>
         </Grid>
 
@@ -100,9 +133,35 @@
             </Border>
 
             <Border Grid.Column="1" Margin="15, 0, 0, 0">
-                <StackPanel Background="#3B3B3B">
-                
-                </StackPanel>
+                <DockPanel  Background="#3B3B3B">
+                    <Label DockPanel.Dock="Top" x:Name="Title" FontSize="30" FontWeight="Bold" Content="Title" HorizontalAlignment="Center" />
+
+                    <Border DockPanel.Dock="Top" Margin="10, 0">
+                        <Image x:Name="Preview" Source="images/placeholder.png" />
+                    </Border>
+
+                    <TextBlock DockPanel.Dock="Top" x:Name="Description" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." Margin="15" />
+
+                    <TextBlock DockPanel.Dock="Top"  x:Name="Warning" Text="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip."  Margin="35, 0, 15, 15" Foreground="#B83A3A" />
+
+                    <Grid  DockPanel.Dock="Bottom">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" Style="{StaticResource ClickableIcon}" x:Name="InstallButton" VerticalAlignment="Bottom" Margin="0, 0, 0, 20">
+                            <Image Source="images/install.png" />
+                        </Button>
+                        <Button Grid.Column="2" Style="{StaticResource ClickableIcon}" x:Name="UninstallButton" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="0, 0, 0, 20" IsEnabled="False" >
+                            <Image Source="images/uninstall.png" />
+                        </Button>
+                    </Grid>
+                </DockPanel>
             </Border>
         </Grid>
 

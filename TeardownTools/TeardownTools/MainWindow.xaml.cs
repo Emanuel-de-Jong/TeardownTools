@@ -58,10 +58,12 @@ namespace TeardownTools
             if (this.WindowState == WindowState.Maximized)
             {
                 this.WindowState = WindowState.Normal;
+                MaximizeImage.Source = new BitmapImage(new Uri(@"/images/maximize.png", UriKind.Relative));
             }
             else
             {
                 this.WindowState = WindowState.Maximized;
+                MaximizeImage.Source = new BitmapImage(new Uri(@"/images/resize.png", UriKind.Relative));
             }
         }
     }
