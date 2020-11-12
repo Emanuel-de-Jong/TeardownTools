@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeardownTools"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="TeardownTools" Height="800" Width="1000"
+        Title="TeardownTools" Height="800" Width="1100"
         WindowStyle="None" AllowsTransparency="True"
-        Background="#FF2D2D2D" 
+        Background="#FF2D2D2D" Loaded="Window_Loaded"
         >
 
     <Window.Resources>
@@ -91,7 +91,6 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-
         <Grid Grid.Column="0" x:Name="TitleBar" MouseDown="TitleBar_MouseDown">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -122,15 +121,22 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="15*" />
-                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="26*" />
+                <ColumnDefinition Width="10*" />
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0" Margin="0, 0, 15, 0">
-                <ItemsControl Background="#464646">
-                
-                </ItemsControl>
-            </Border>
+            <ListBox Grid.Column="0" x:Name="ModItemsControl" Background="#464646" BorderBrush="#FF0A0A0A" BorderThickness="4" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#FF0A0A0A" BorderThickness="4">
+                            <StackPanel Margin="20, 5, 0, 5">
+                                <Label Content="{Binding Name}" Foreground="#FFC1C1C1" FontSize="28" FontWeight="Bold" />
+                                <Label Content="{Binding ShortDescription}" Foreground="#FFC1C1C1" FontSize="17" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
             <Border Grid.Column="1" Margin="15, 0, 0, 0">
                 <DockPanel  Background="#3B3B3B">
@@ -142,7 +148,7 @@
 
                     <TextBlock DockPanel.Dock="Top" x:Name="Description" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." Margin="15" />
 
-                    <TextBlock DockPanel.Dock="Top"  x:Name="Warning" Text="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip."  Margin="35, 0, 15, 15" Foreground="#B83A3A" />
+                    <TextBlock DockPanel.Dock="Top" x:Name="Warning" Text="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip."  Margin="35, 0, 15, 15" Foreground="#B83A3A" />
 
                     <Grid  DockPanel.Dock="Bottom">
                         <Grid.RowDefinitions>

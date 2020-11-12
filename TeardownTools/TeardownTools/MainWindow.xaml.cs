@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,15 +13,40 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TeardownTools.ViewModels;
 
 namespace TeardownTools
 {
     public partial class MainWindow : Window
     {
+        private ObservableCollection<ModViewModel> ModViewModels;
+
         public MainWindow()
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ModViewModels = new ObservableCollection<ModViewModel>();
+
+            ModViewModels.Add(
+                new ModViewModel("Remove Splash",
+                "Remove the splash at the start of the game.",
+                "Remove the logo and warning message during the launch of the game.", true,
+                @"D:\Coding\Repos\TeardownTools\TeardownTools\TeardownTools\images\placeholder.png"));
+            ModViewModels.Add(
+                new ModViewModel("Show Speedometer",
+                "Display your velocity on the screen.",
+                "Display your x, y and z velocity at the top left of the screen during gameplay.", false,
+                @"D:\Coding\Repos\TeardownTools\TeardownTools\TeardownTools\images\placeholder.png",
+                "Not allowed in runs because of SRC regulations."));
+
+            for(int i=0; i<15; i++)
+                ModViewModels.Add(new ModViewModel());
+
+            ModItemsControl.ItemsSource = ModViewModels;
         }
 
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
