@@ -43,10 +43,10 @@ namespace TeardownTools
                 @"D:\Coding\Repos\TeardownTools\TeardownTools\TeardownTools\images\placeholder.png",
                 "Not allowed in runs because of SRC regulations."));
 
-            for(int i=0; i<15; i++)
-                ModViewModels.Add(new ModViewModel());
+            for(int i=0; i<30; i++)
+                ModViewModels.Add(new ModViewModel("Name "+i, "Short description "+i, "Description "+i));
 
-            ModItemsControl.ItemsSource = ModViewModels;
+            ModListBox.ItemsSource = ModViewModels;
         }
 
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
@@ -90,6 +90,20 @@ namespace TeardownTools
             {
                 this.WindowState = WindowState.Maximized;
                 MaximizeImage.Source = new BitmapImage(new Uri(@"/images/resize.png", UriKind.Relative));
+            }
+        }
+
+        private void ModListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(ModListBox.SelectedItem != null)
+            {
+                ModViewModel item = ModListBox.SelectedItem as ModViewModel;
+
+                Name.Content = item.Name;
+                Preview.Source = item.Preview;
+                Description.Text = item.Description;
+                Warning.Text = item.Warning;
+
             }
         }
     }
