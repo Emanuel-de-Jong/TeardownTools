@@ -18,12 +18,12 @@ namespace TeardownTools.Templates
                     {
                         new ModViewModel("Remove Splash",
                             "Remove the splash at the start of the game.",
-                            "Remove the logo and warning message during the launch of the game.", true,
-                            @"D:\Coding\Repos\TeardownTools\TeardownTools\TeardownTools\images\placeholder.png"),
+                            "Remove the logo and warning message during the launch of the game.", false, false,
+                            @"images\placeholder.png", UriKind.Relative),
                         new ModViewModel("Show Speedometer",
                             "Display your velocity on the screen.",
-                            "Display your x, y and z velocity at the top left of the screen during gameplay.", false,
-                            @"D:\Coding\Repos\TeardownTools\TeardownTools\TeardownTools\images\placeholder.png",
+                            "Display your x, y and z velocity at the top left of the screen during gameplay.", true, true,
+                            @"images\placeholder.png", UriKind.Relative,
                             "Not allowed in runs because of SRC regulations.")
                     };
             }
@@ -33,11 +33,7 @@ namespace TeardownTools.Templates
         {
             get
             {
-                return new ModViewModel("Show Speedometer",
-                    "Display your velocity on the screen.",
-                    "Display your x, y and z velocity at the top left of the screen during gameplay.", false,
-                    @"D:\Coding\Repos\TeardownTools\TeardownTools\TeardownTools\images\placeholder.png",
-                    "Not allowed in runs because of SRC regulations.");
+                return ModViewModels[0];
             }
         }
     }

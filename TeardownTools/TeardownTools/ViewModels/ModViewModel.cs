@@ -3,64 +3,73 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace TeardownTools.ViewModels
 {
     public class ModViewModel
     {
+        private bool isInstalled;
+
+
         public string Name { get; set; }
         public string ShortDescription { get; set; }
         public string Description { get; set; }
         public string Warning { get; set; }
-        public bool IsInstalled { get; set; }
+        public bool IsSRCProhibited { get; set; }
+        public bool IsInstalled
+        {
+            get
+            {
+                return isInstalled;
+            }
+            set
+            {
+                isInstalled = value;
+
+                if (value)
+                {
+                    InstalledColor = "#FF36983F";
+                }
+                else
+                {
+                    InstalledColor = "#FFB83A3A";
+                }
+            }
+        }
         public BitmapImage Preview { get; set; }
+        public string InstalledColor { get; set; }
 
-        public ModViewModel(string name, string shortDescription, string description, bool isInstalled, string previewPath, string warning)
+
+        public ModViewModel(string _name, string _shortDescription, string _description, bool _isSRCProhibited, bool _isInstalled, string _previewPath, UriKind _previewPathScope, string _warning)
         {
-            Name = name;
-            ShortDescription = shortDescription;
-            Description = description;
-            IsInstalled = isInstalled;
-            Preview = new BitmapImage(new Uri(previewPath, UriKind.Absolute));
-            Warning = warning;
+            Name = _name;
+            ShortDescription = _shortDescription;
+            Description = _description;
+            IsSRCProhibited = _isSRCProhibited;
+            IsInstalled = _isInstalled;
+            Preview = new BitmapImage(new Uri(_previewPath, _previewPathScope));
+            Warning = _warning;
         }
 
-        public ModViewModel(string name, string shortDescription, string description, bool isInstalled, string previewPath)
+        public ModViewModel(string _name, string _shortDescription, string _description, bool _isSRCProhibited, bool _isInstalled, string _previewPath, UriKind _previewPathScope)
         {
-            Name = name;
-            ShortDescription = shortDescription;
-            Description = description;
-            IsInstalled = isInstalled;
-            Preview = new BitmapImage(new Uri(previewPath, UriKind.Absolute));
+            Name = _name;
+            ShortDescription = _shortDescription;
+            Description = _description;
+            IsSRCProhibited = _isSRCProhibited;
+            IsInstalled = _isInstalled;
+            Preview = new BitmapImage(new Uri(_previewPath, _previewPathScope));
             Warning = string.Empty;
         }
 
-        public ModViewModel(string name, string shortDescription, string description, string warning)
+        public ModViewModel(int number)
         {
-            Name = name;
-            ShortDescription = shortDescription;
-            Description = description;
-            IsInstalled = false;
-            Preview = new BitmapImage(new Uri(@"/images/placeholder.png", UriKind.Relative));
-            Warning = warning;
-        }
-
-        public ModViewModel(string name, string shortDescription, string description)
-        {
-            Name = name;
-            ShortDescription = shortDescription;
-            Description = description;
-            IsInstalled = false;
-            Preview = new BitmapImage(new Uri(@"/images/placeholder.png", UriKind.Relative));
-            Warning = string.Empty;
-        }
-
-        public ModViewModel()
-        {
-            Name = "Name";
-            ShortDescription = "Short description.";
-            Description = "Description.";
+            Name = "Name " + number;
+            ShortDescription = "Short description " + number + ".";
+            Description = "Description " + number + ".";
+            IsSRCProhibited = false;
             IsInstalled = false;
             Preview = new BitmapImage(new Uri(@"/images/placeholder.png", UriKind.Relative));
             Warning = string.Empty;

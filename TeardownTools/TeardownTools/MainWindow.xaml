@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeardownTools" xmlns:templates="clr-namespace:TeardownTools.Templates"
+        xmlns:converters="clr-namespace:TeardownTools.Converters"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Title="TeardownTools" Height="800" Width="1100"
         WindowStyle="None" AllowsTransparency="True"
@@ -14,7 +15,15 @@
     <Window.Resources>
         <templates:ModViewModelTemplate x:Key="ModViewModelTemplate"/>
 
-        <Style TargetType="Button">
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+        <converters:InvertBooleanConverter x:Key="InvertBooleanConverter" />
+
+        <converters:StringToBrushConverter x:Key="StringToBrushConverter" />
+
+
+        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}" x:Key="ButtonStyle">
             <Setter Property="Background" Value="#3B3B3B"/>
             <Setter Property="Margin" Value="20, 0"/>
             <Setter Property="Foreground" Value="#FFC1C1C1"/>
@@ -34,30 +43,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#FFC1C1C1"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-        </Style>
-        <Style TargetType="ComboBox">
-        </Style>
-        <Style TargetType="Image">
-        </Style>
-        <Style TargetType="Label">
-            <Setter Property="Foreground" Value="#FFC1C1C1"/>
-        </Style>
-        <Style TargetType="ListBox">
-        </Style>
-        <Style TargetType="StackPanel">
-        </Style>
-        <Style TargetType="Slider">
-        </Style>
-        <Style TargetType="Border">
-            <Setter Property="BorderBrush" Value="#FF0A0A0A"/>
-            <Setter Property="BorderThickness" Value="4"/>
-        </Style>
 
-        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button" x:Key="ClickableIcon" >
+        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}" x:Key="IconButtonStyle">
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="Width" Value="30"/>
             <Setter Property="Height" Value="30"/>
@@ -83,9 +70,30 @@
             </Style.Triggers>
         </Style>
 
+        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}" x:Key="TextBlockStyle">
+            <Setter Property="Foreground" Value="#FFC1C1C1"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
 
+        <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}" x:Key="LabelStyle">
+            <Setter Property="Foreground" Value="#FFC1C1C1"/>
+        </Style>
 
+        <Style TargetType="Image" x:Key="ImageStyle">
+            
+        </Style>
 
+        <Style TargetType="Border" x:Key="BorderStyle">
+            <Setter Property="BorderBrush" Value="#FF0A0A0A"/>
+            <Setter Property="BorderThickness" Value="4"/>
+        </Style>
+
+        
+        
+        
+        
+        
         <Style x:Key="ListBoxStyle" TargetType="{x:Type ListBox}">
             <Setter Property="SnapsToDevicePixels" Value="true"/>
             <Setter Property="OverridesDefaultStyle" Value="true"/>
@@ -169,15 +177,15 @@
                 <ColumnDefinition Width="70" />
             </Grid.ColumnDefinitions>
 
-            <Label Content="TeardownTools" FontSize="50" VerticalAlignment="Center" FontFamily="Rockwell" />
+            <Label Style="{StaticResource LabelStyle}" Content="TeardownTools" FontSize="50" VerticalAlignment="Center" FontFamily="Rockwell" />
 
-            <Button Grid.Column="1" Style="{StaticResource ClickableIcon}" x:Name="MinimizeButton" Click="MinimizeButton_Click">
+            <Button Style="{StaticResource IconButtonStyle}" Grid.Column="1" x:Name="MinimizeButton" Click="MinimizeButton_Click">
                 <Image x:Name="MinimizeImage" Source="images/minimize.png" />
             </Button>
-            <Button Grid.Column="2" Style="{StaticResource ClickableIcon}" x:Name="MaximizeButton" Click="MaximizeButton_Click">
+            <Button Style="{StaticResource IconButtonStyle}" Grid.Column="2" x:Name="MaximizeButton" Click="MaximizeButton_Click">
                 <Image x:Name="MaximizeImage" Source="images/maximize.png" />
             </Button>
-            <Button Grid.Column="3" Style="{StaticResource ClickableIcon}" x:Name="CloseButton" Click="CloseButton_Click">
+            <Button Style="{StaticResource IconButtonStyle}" Grid.Column="3" x:Name="CloseButton" Click="CloseButton_Click">
                 <Image x:Name="CloseImage" Source="images/close.png" />
             </Button>
         </Grid>
@@ -192,35 +200,35 @@
                 <ColumnDefinition Width="10*" />
             </Grid.ColumnDefinitions>
 
-            <ListBox Grid.Column="0" Style="{StaticResource ListBoxStyle}" ItemsSource="{Binding ModViewModels}" d:DataContext="{StaticResource ModViewModelTemplate}"  x:Name="ModListBox" SelectionChanged="ModListBox_SelectionChanged">
+            <ListBox Style="{StaticResource ListBoxStyle}" Grid.Column="0" ItemsSource="{Binding ModViewModels}" d:DataContext="{StaticResource ModViewModelTemplate}"  x:Name="ModListBox" SelectionChanged="ModListBox_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <DockPanel Margin="0, 0, 0, 0">
-                            <Rectangle DockPanel.Dock="Left" Fill="#B83A3A" Width="17" />
+                            <Rectangle DockPanel.Dock="Left" Fill="{Binding InstalledColor, Converter={StaticResource StringToBrushConverter}}" Width="17" />
                             <StackPanel DockPanel.Dock="Left" Margin="24, 0, 0, 0">
-                                <Label Content="{Binding Name}" Foreground="#FFC1C1C1" FontSize="28" FontWeight="Bold" />
-                                <Label Content="{Binding ShortDescription}" Foreground="#FFC1C1C1" FontSize="17" />
+                                <Label Style="{StaticResource LabelStyle}" Content="{Binding Name}" Foreground="#FFC1C1C1" FontSize="28" FontWeight="Bold" />
+                                <Label Style="{StaticResource LabelStyle}" Content="{Binding ShortDescription}" Foreground="#FFC1C1C1" FontSize="17" />
                             </StackPanel>
-                            <Image DockPanel.Dock="Right" Source="images/src_prohibited.png" Width="50" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 10, 20, 0" />
+                            <Image Style="{StaticResource ImageStyle}" Visibility="{Binding IsSRCProhibited, Converter={StaticResource BooleanToVisibilityConverter}}" DockPanel.Dock="Right" Source="images/src_prohibited.png" Width="50" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 10, 20, 0" />
                         </DockPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <Border Grid.Column="1" Margin="15, 0, 0, 0">
+            <Border Style="{StaticResource BorderStyle}" Grid.Column="1" Margin="15, 0, 0, 0">
                 <ContentControl x:Name="DetailsContentControl" Content="{Binding Details}" d:DataContext="{StaticResource ModViewModelTemplate}">
                     <ContentControl.ContentTemplate>
                         <DataTemplate>
-                            <DockPanel  Background="#3B3B3B">
-                                <Label DockPanel.Dock="Top" FontSize="30" FontWeight="Bold" Content="{Binding Name}" HorizontalAlignment="Center" />
+                            <DockPanel Background="#3B3B3B">
+                                <Label Style="{StaticResource LabelStyle}" DockPanel.Dock="Top" FontSize="30" FontWeight="Bold" Content="{Binding Name}" HorizontalAlignment="Center" />
 
-                                <Border DockPanel.Dock="Top" Margin="10, 0">
-                                    <Image x:Name="Preview" Source="{Binding Preview}" />
+                                <Border Style="{StaticResource BorderStyle}" DockPanel.Dock="Top" Margin="10, 0">
+                                    <Image Style="{StaticResource ImageStyle}" x:Name="Preview" Source="{Binding Preview}" />
                                 </Border>
 
-                                <TextBlock DockPanel.Dock="Top" Text="{Binding Description}" Margin="15" />
+                                <TextBlock Style="{StaticResource TextBlockStyle}" DockPanel.Dock="Top" Text="{Binding Description}" Margin="15" />
 
-                                <TextBlock DockPanel.Dock="Top" Text="{Binding Warning}"  Margin="15, 0, 15, 15" Foreground="#B83A3A" />
+                                <TextBlock Style="{StaticResource TextBlockStyle}" DockPanel.Dock="Top" Text="{Binding Warning}"  Margin="15, 0, 15, 15" Foreground="#B83A3A" />
 
                                 <Grid  DockPanel.Dock="Bottom">
                                     <Grid.RowDefinitions>
@@ -232,10 +240,10 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <Button Grid.Column="0" Style="{StaticResource ClickableIcon}" x:Name="InstallButton" VerticalAlignment="Bottom" Margin="0, 0, 0, 20">
+                                    <Button Style="{StaticResource IconButtonStyle}" Grid.Column="0" x:Name="InstallButton" VerticalAlignment="Bottom" Margin="0, 0, 0, 20" IsEnabled="{Binding IsInstalled, Converter={StaticResource InvertBooleanConverter}}">
                                         <Image Source="images/install.png" />
                                     </Button>
-                                    <Button Grid.Column="2" Style="{StaticResource ClickableIcon}" x:Name="UninstallButton" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="0, 0, 0, 20" >
+                                    <Button Style="{StaticResource IconButtonStyle}" Grid.Column="2" x:Name="UninstallButton" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="0, 0, 0, 20" IsEnabled="{Binding IsInstalled}">
                                         <Image Source="images/uninstall.png" />
                                     </Button>
                                 </Grid>
@@ -259,9 +267,9 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="1" Grid.Column="0" Content="Uninstall All" />
+            <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" Grid.Column="0" Content="Uninstall All" />
 
-            <Label Grid.Row="1" Grid.Column="3" Content="V0.1" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="18" />
+            <Label Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.Column="3" Content="V0.1" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="18" />
         </Grid>
     </Grid>
 </Window>

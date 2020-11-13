@@ -35,18 +35,18 @@ namespace TeardownTools
 
             ModViewModels.Add(
                 new ModViewModel("Remove Splash",
-                "Remove the splash at the start of the game.",
-                "Remove the logo and warning message during the launch of the game.", true,
-                @"D:\Coding\Repos\TeardownTools\TeardownTools\TeardownTools\images\placeholder.png"));
+                    "Remove the splash at the start of the game.",
+                    "Remove the logo and warning message during the launch of the game.", false, false,
+                    @"images\placeholder.png", UriKind.Relative));
             ModViewModels.Add(
                 new ModViewModel("Show Speedometer",
-                "Display your velocity on the screen.",
-                "Display your x, y and z velocity at the top left of the screen during gameplay.", false,
-                @"D:\Coding\Repos\TeardownTools\TeardownTools\TeardownTools\images\placeholder.png",
-                "Not allowed in runs because of SRC regulations."));
+                    "Display your velocity on the screen.",
+                    "Display your x, y and z velocity at the top left of the screen during gameplay.", true, true,
+                    @"images\placeholder.png", UriKind.Relative,
+                    "Not allowed in runs because of SRC regulations."));
 
             for(int i=0; i<30; i++)
-                ModViewModels.Add(new ModViewModel("Name "+i, "Short description "+i, "Description "+i));
+                ModViewModels.Add(new ModViewModel(i));
 
             ModListBox.ItemsSource = ModViewModels;
             Details = ModViewModels[0];
