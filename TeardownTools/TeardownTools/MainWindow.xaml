@@ -3,14 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TeardownTools"
+        xmlns:local="clr-namespace:TeardownTools" xmlns:templates="clr-namespace:TeardownTools.Templates"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Title="TeardownTools" Height="800" Width="1100"
         WindowStyle="None" AllowsTransparency="True"
         Background="#FF2D2D2D" Loaded="Window_Loaded"
         >
 
+
     <Window.Resources>
+        <templates:ModViewModelTemplate x:Key="ModViewModelTemplate"/>
+
         <Style TargetType="Button">
             <Setter Property="Background" Value="#3B3B3B"/>
             <Setter Property="Margin" Value="20, 0"/>
@@ -56,8 +59,8 @@
 
         <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button" x:Key="ClickableIcon" >
             <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="Width" Value="40"/>
-            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
             <Setter Property="Margin" Value="0"/>
             <Setter Property="Background" Value="{x:Null}"/>
             <Setter Property="Template">
@@ -143,10 +146,8 @@
         </Style>
     </Window.Resources>
 
-    
-    
-    
-    
+
+
     <Grid Margin="30, 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
@@ -191,47 +192,57 @@
                 <ColumnDefinition Width="10*" />
             </Grid.ColumnDefinitions>
 
-            <ListBox Grid.Column="0" Style="{StaticResource ListBoxStyle}" x:Name="ModListBox" SelectionChanged="ModListBox_SelectionChanged">
+            <ListBox Grid.Column="0" Style="{StaticResource ListBoxStyle}" ItemsSource="{Binding ModViewModels}" d:DataContext="{StaticResource ModViewModelTemplate}"  x:Name="ModListBox" SelectionChanged="ModListBox_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Margin="20, 5, 0, 5">
-                            <Label Content="{Binding Name}" Foreground="#FFC1C1C1" FontSize="28" FontWeight="Bold" />
-                            <Label Content="{Binding ShortDescription}" Foreground="#FFC1C1C1" FontSize="17" />
-                        </StackPanel>
+                        <DockPanel Margin="0, 0, 0, 0">
+                            <Rectangle DockPanel.Dock="Left" Fill="#B83A3A" Width="17" />
+                            <StackPanel DockPanel.Dock="Left" Margin="24, 0, 0, 0">
+                                <Label Content="{Binding Name}" Foreground="#FFC1C1C1" FontSize="28" FontWeight="Bold" />
+                                <Label Content="{Binding ShortDescription}" Foreground="#FFC1C1C1" FontSize="17" />
+                            </StackPanel>
+                            <Image DockPanel.Dock="Right" Source="images/src_prohibited.png" Width="50" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 10, 20, 0" />
+                        </DockPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
 
             <Border Grid.Column="1" Margin="15, 0, 0, 0">
-                <DockPanel  Background="#3B3B3B">
-                    <Label DockPanel.Dock="Top" x:Name="Name" FontSize="30" FontWeight="Bold" Content="Title" HorizontalAlignment="Center" />
+                <ContentControl x:Name="DetailsContentControl" Content="{Binding Details}" d:DataContext="{StaticResource ModViewModelTemplate}">
+                    <ContentControl.ContentTemplate>
+                        <DataTemplate>
+                            <DockPanel  Background="#3B3B3B">
+                                <Label DockPanel.Dock="Top" FontSize="30" FontWeight="Bold" Content="{Binding Name}" HorizontalAlignment="Center" />
 
-                    <Border DockPanel.Dock="Top" Margin="10, 0">
-                        <Image x:Name="Preview" Source="images/placeholder.png" />
-                    </Border>
+                                <Border DockPanel.Dock="Top" Margin="10, 0">
+                                    <Image x:Name="Preview" Source="{Binding Preview}" />
+                                </Border>
 
-                    <TextBlock DockPanel.Dock="Top" x:Name="Description" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." Margin="15" />
+                                <TextBlock DockPanel.Dock="Top" Text="{Binding Description}" Margin="15" />
 
-                    <TextBlock DockPanel.Dock="Top" x:Name="Warning" Text="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip."  Margin="35, 0, 15, 15" Foreground="#B83A3A" />
+                                <TextBlock DockPanel.Dock="Top" Text="{Binding Warning}"  Margin="15, 0, 15, 15" Foreground="#B83A3A" />
 
-                    <Grid  DockPanel.Dock="Bottom">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                                <Grid  DockPanel.Dock="Bottom">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
 
-                        <Button Grid.Column="0" Style="{StaticResource ClickableIcon}" x:Name="InstallButton" VerticalAlignment="Bottom" Margin="0, 0, 0, 20">
-                            <Image Source="images/install.png" />
-                        </Button>
-                        <Button Grid.Column="2" Style="{StaticResource ClickableIcon}" x:Name="UninstallButton" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="0, 0, 0, 20" IsEnabled="False" >
-                            <Image Source="images/uninstall.png" />
-                        </Button>
-                    </Grid>
-                </DockPanel>
+                                    <Button Grid.Column="0" Style="{StaticResource ClickableIcon}" x:Name="InstallButton" VerticalAlignment="Bottom" Margin="0, 0, 0, 20">
+                                        <Image Source="images/install.png" />
+                                    </Button>
+                                    <Button Grid.Column="2" Style="{StaticResource ClickableIcon}" x:Name="UninstallButton" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="0, 0, 0, 20" >
+                                        <Image Source="images/uninstall.png" />
+                                    </Button>
+                                </Grid>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ContentControl.ContentTemplate>
+                </ContentControl>
             </Border>
         </Grid>
 

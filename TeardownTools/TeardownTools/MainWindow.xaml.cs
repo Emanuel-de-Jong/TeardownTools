@@ -14,12 +14,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TeardownTools.ViewModels;
+using TeardownTools.Templates;
 
 namespace TeardownTools
 {
     public partial class MainWindow : Window
     {
         private ObservableCollection<ModViewModel> ModViewModels;
+        private ModViewModel Details;
 
         public MainWindow()
         {
@@ -47,6 +49,9 @@ namespace TeardownTools
                 ModViewModels.Add(new ModViewModel("Name "+i, "Short description "+i, "Description "+i));
 
             ModListBox.ItemsSource = ModViewModels;
+            Details = ModViewModels[0];
+            ModListBox.SelectedItem = Details;
+            DetailsContentControl.Content = Details;
         }
 
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
@@ -99,11 +104,17 @@ namespace TeardownTools
             {
                 ModViewModel item = ModListBox.SelectedItem as ModViewModel;
 
-                Name.Content = item.Name;
-                Preview.Source = item.Preview;
-                Description.Text = item.Description;
-                Warning.Text = item.Warning;
+                DetailsContentControl.Content = item;
 
+                //if (item.IsInstalled)
+                //{
+                //    InstallButton.IsEnabled = false;
+                //    UninstallButton.IsEnabled = true;
+                //} else
+                //{
+                //    InstallButton.IsEnabled = true;
+                //    UninstallButton.IsEnabled = false;
+                //}
             }
         }
     }
