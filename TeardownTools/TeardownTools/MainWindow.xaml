@@ -20,7 +20,6 @@
 
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:InvertBooleanConverter x:Key="InvertBooleanConverter" />
-        <converters:StringToBrushConverter x:Key="StringToBrushConverter" />
 
 
         <SolidColorBrush x:Key="Text" Color="#C1C1C1" />
@@ -48,17 +47,9 @@
 
         <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}" x:Key="TitleLabelStyle">
             <Setter Property="Foreground" Value="{StaticResource Text}"/>
-            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="FontSize" Value="25"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="FontWeight" Value="Bold"/>
-        </Style>
-
-        <Style TargetType="StackPanel" x:Key="StackPanelStyle">
-            <Setter Property="Background" Value="{StaticResource Gray}"/>
-        </Style>
-
-        <Style TargetType="DockPanel" x:Key="DockPanelStyle">
-            <Setter Property="Background" Value="{StaticResource Gray}"/>
         </Style>
 
         <Style TargetType="Image" x:Key="ImageStyle">
@@ -140,7 +131,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
-                        <Border Name="Border" Style="{StaticResource BorderStyle}" Background="{TemplateBinding Background}" BorderThickness="0 0 0 4">
+                        <Border Name="Border" Style="{StaticResource BorderStyle}" BorderThickness="0 0 0 4" Background="{TemplateBinding Background}">
                             <ContentPresenter />
                         </Border>
                     </ControlTemplate>
@@ -211,10 +202,11 @@
                      d:DataContext="{StaticResource ModViewModelTemplate}" SelectionChanged="ModListBox_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <DockPanel Style="{StaticResource DockPanelStyle}" Margin="0, 0, 0, 5">
-                            <Rectangle DockPanel.Dock="Left" Fill="{Binding InstalledColor, Converter={StaticResource StringToBrushConverter}}" Width="17" />
+                        <DockPanel>
+                            <Rectangle DockPanel.Dock="Left" Fill="{StaticResource Green}" Width="17" Visibility="{Binding IsInstalled, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            <Rectangle DockPanel.Dock="Left" Fill="{StaticResource Red}" Width="17" />
 
-                            <StackPanel Style="{StaticResource StackPanelStyle}" DockPanel.Dock="Left" Margin="24, 0, 0, 0">
+                            <StackPanel DockPanel.Dock="Left" Margin="24, 0, 0, 5">
                                 <Label Style="{StaticResource TitleLabelStyle}" Content="{Binding Name}" />
                                 <Label Style="{StaticResource LabelStyle}" Content="{Binding ShortDescription}" />
                             </StackPanel>
@@ -232,8 +224,8 @@
                 <ContentControl x:Name="DetailsContentControl" Content="{Binding Details}" d:DataContext="{StaticResource ModViewModelTemplate}">
                     <ContentControl.ContentTemplate>
                         <DataTemplate>
-                            <DockPanel Style="{StaticResource DockPanelStyle}">
-                                <Label Style="{StaticResource TitleLabelStyle}" DockPanel.Dock="Top" Content="{Binding Name}" HorizontalAlignment="Center" />
+                            <DockPanel Background="{StaticResource Gray}">
+                                <Label Style="{StaticResource TitleLabelStyle}" DockPanel.Dock="Top" Content="{Binding Name}" HorizontalAlignment="Center" FontSize="28" Margin="0, 10" />
 
                                 <Border Style="{StaticResource BorderStyle}" DockPanel.Dock="Top" Margin="10, 0">
                                     <Image Style="{StaticResource ImageStyle}" Source="{Binding Preview}" />

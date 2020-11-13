@@ -31,21 +31,20 @@ namespace TeardownTools
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ModViewModels = new ObservableCollection<ModViewModel>();
-
-            ModViewModels.Add(
+            ModViewModels = new ObservableCollection<ModViewModel>
+            {
                 new ModViewModel("Remove Splash",
                     "Remove the splash at the start of the game.",
                     "Remove the logo and warning message during the launch of the game.", false, false,
-                    @"images\placeholder.png", UriKind.Relative));
-            ModViewModels.Add(
+                    @"images\placeholder.png", UriKind.Relative),
                 new ModViewModel("Show Speedometer",
                     "Display your velocity on the screen.",
                     "Display your x, y and z velocity at the top left of the screen during gameplay.", true, true,
                     @"images\placeholder.png", UriKind.Relative,
-                    "Not allowed in runs because of SRC regulations."));
+                    "Not allowed in runs because of SRC regulations.")
+            };
 
-            for(int i=0; i<30; i++)
+            for (int i=0; i<30; i++)
                 ModViewModels.Add(new ModViewModel(i));
 
             ModListBox.ItemsSource = ModViewModels;

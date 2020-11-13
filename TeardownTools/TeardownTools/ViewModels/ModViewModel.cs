@@ -10,36 +10,13 @@ namespace TeardownTools.ViewModels
 {
     public class ModViewModel
     {
-        private bool isInstalled;
-
-
         public string Name { get; set; }
         public string ShortDescription { get; set; }
         public string Description { get; set; }
         public string Warning { get; set; }
         public bool IsSRCProhibited { get; set; }
-        public bool IsInstalled
-        {
-            get
-            {
-                return isInstalled;
-            }
-            set
-            {
-                isInstalled = value;
-
-                if (value)
-                {
-                    InstalledColor = "#FF36983F";
-                }
-                else
-                {
-                    InstalledColor = "#FFB83A3A";
-                }
-            }
-        }
+        public bool IsInstalled { get; set; }
         public BitmapImage Preview { get; set; }
-        public string InstalledColor { get; set; }
 
 
         public ModViewModel(string _name, string _shortDescription, string _description, bool _isSRCProhibited, bool _isInstalled, string _previewPath, UriKind _previewPathScope, string _warning)
@@ -64,11 +41,11 @@ namespace TeardownTools.ViewModels
             Warning = string.Empty;
         }
 
-        public ModViewModel(int number)
+        public ModViewModel(int _number)
         {
-            Name = "Name " + number;
-            ShortDescription = "Short description " + number + ".";
-            Description = "Description " + number + ".";
+            Name = "Name " + _number;
+            ShortDescription = "Short description " + _number + ".";
+            Description = "Description " + _number + ".";
             IsSRCProhibited = false;
             IsInstalled = false;
             Preview = new BitmapImage(new Uri(@"/images/placeholder.png", UriKind.Relative));
