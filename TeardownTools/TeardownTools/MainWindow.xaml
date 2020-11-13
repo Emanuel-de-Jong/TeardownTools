@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TeardownTools" xmlns:templates="clr-namespace:TeardownTools.Templates"
+        xmlns:local="clr-namespace:TeardownTools"
+        xmlns:templates="clr-namespace:TeardownTools.Templates"
         xmlns:converters="clr-namespace:TeardownTools.Converters"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Title="TeardownTools" Height="800" Width="1100"
@@ -11,6 +12,7 @@
         Background="#FF2D2D2D" Loaded="Window_Loaded"
         >
 
+    
 
     <Window.Resources>
         <templates:ModViewModelTemplate x:Key="ModViewModelTemplate"/>
@@ -21,54 +23,7 @@
         <converters:InvertBooleanConverter x:Key="InvertBooleanConverter" />
 
         <converters:StringToBrushConverter x:Key="StringToBrushConverter" />
-
-
-        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}" x:Key="ButtonStyle">
-            <Setter Property="Background" Value="#3B3B3B"/>
-            <Setter Property="Margin" Value="20, 0"/>
-            <Setter Property="Foreground" Value="#FFC1C1C1"/>
-            <Setter Property="FontSize" Value="25"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="#FF0A0A0A" BorderThickness="4">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#FF2D2D2D"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}" x:Key="IconButtonStyle">
-            <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="Width" Value="30"/>
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="Background" Value="{x:Null}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{x:Null}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Opacity" Value="0.6"/>
-                    <Setter Property="Background" Value="{x:Null}"/>
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Opacity" Value="0.3"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+        
 
         <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}" x:Key="TextBlockStyle">
             <Setter Property="Foreground" Value="#FFC1C1C1"/>
@@ -84,77 +39,98 @@
             
         </Style>
 
+        <Style TargetType="Image" x:Key="IconImageStyle">
+            <Setter Property="Width" Value="50"/>
+        </Style>
+
         <Style TargetType="Border" x:Key="BorderStyle">
             <Setter Property="BorderBrush" Value="#FF0A0A0A"/>
             <Setter Property="BorderThickness" Value="4"/>
         </Style>
+        
+        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}" x:Key="ButtonStyle">
+            <Setter Property="Background" Value="#3B3B3B"/>
+            <Setter Property="Margin" Value="20, 0"/>
+            <Setter Property="Foreground" Value="#FFC1C1C1"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Style="{StaticResource BorderStyle}" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF2D2D2D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-        
-        
-        
-        
-        
-        <Style x:Key="ListBoxStyle" TargetType="{x:Type ListBox}">
-            <Setter Property="SnapsToDevicePixels" Value="true"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}" x:Key="IconButtonStyle">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="0.6"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.3"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}" x:Key="ListBoxStyle">
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
-            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-            <Setter Property="MinWidth" Value="120"/>
-            <Setter Property="MinHeight" Value="95"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBox">
-                        <Border Name="Border" Background="#464646" BorderBrush="#FF0A0A0A" BorderThickness="4">
-                            <ScrollViewer Focusable="false">
+                        <Border  Style="{StaticResource BorderStyle}">
+                            <ScrollViewer Background="#464646">
                                 <StackPanel IsItemsHost="True" />
                             </ScrollViewer>
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter TargetName="Border" Property="Background" Value="#EEE" />
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#AAA" />
-                            </Trigger>
-                            <Trigger Property="IsGrouping" Value="true">
-                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-
-
-
-
-        <Style x:Key="{x:Type ListBoxItem}" TargetType="ListBoxItem">
-            <Setter Property="SnapsToDevicePixels" Value="true"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Style TargetType="ListBoxItem" x:Key="{x:Type ListBoxItem}">
+            <Setter Property="Background" Value="#3B3B3B"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
-                        <Border BorderBrush="#FF0A0A0A" BorderThickness="0 0 0 4" Name="Border" SnapsToDevicePixels="true" Background="#3B3B3B">
+                        <Border Style="{StaticResource BorderStyle}" Background="{TemplateBinding Background}" BorderThickness="0 0 0 4" Name="Border">
                             <ContentPresenter />
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="#2D2D2D"/>
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="#2D2D2D"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="#888"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" Value="#2D2D2D"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="true">
+                    <Setter Property="Background" Value="#2D2D2D"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
 
-
+    
 
     <Grid Margin="30, 0">
         <Grid.RowDefinitions>
@@ -179,24 +155,26 @@
 
             <Label Style="{StaticResource LabelStyle}" Content="TeardownTools" FontSize="50" VerticalAlignment="Center" FontFamily="Rockwell" />
 
-            <Button Style="{StaticResource IconButtonStyle}" Grid.Column="1" x:Name="MinimizeButton" Click="MinimizeButton_Click">
+
+            <Button Style="{StaticResource IconButtonStyle}" Grid.Column="1" HorizontalAlignment="Right" x:Name="MinimizeButton" Click="MinimizeButton_Click">
                 <Image x:Name="MinimizeImage" Source="images/minimize.png" />
             </Button>
-            <Button Style="{StaticResource IconButtonStyle}" Grid.Column="2" x:Name="MaximizeButton" Click="MaximizeButton_Click">
+            <Button Style="{StaticResource IconButtonStyle}" Grid.Column="2" HorizontalAlignment="Right" x:Name="MaximizeButton" Click="MaximizeButton_Click">
                 <Image x:Name="MaximizeImage" Source="images/maximize.png" />
             </Button>
-            <Button Style="{StaticResource IconButtonStyle}" Grid.Column="3" x:Name="CloseButton" Click="CloseButton_Click">
+            <Button Style="{StaticResource IconButtonStyle}" Grid.Column="3" HorizontalAlignment="Right" x:Name="CloseButton" Click="CloseButton_Click">
                 <Image x:Name="CloseImage" Source="images/close.png" />
             </Button>
         </Grid>
 
+        
         
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="26*" />
+                <ColumnDefinition Width="22*" />
                 <ColumnDefinition Width="10*" />
             </Grid.ColumnDefinitions>
 
@@ -205,15 +183,18 @@
                     <DataTemplate>
                         <DockPanel Margin="0, 0, 0, 0">
                             <Rectangle DockPanel.Dock="Left" Fill="{Binding InstalledColor, Converter={StaticResource StringToBrushConverter}}" Width="17" />
+                            
                             <StackPanel DockPanel.Dock="Left" Margin="24, 0, 0, 0">
                                 <Label Style="{StaticResource LabelStyle}" Content="{Binding Name}" Foreground="#FFC1C1C1" FontSize="28" FontWeight="Bold" />
                                 <Label Style="{StaticResource LabelStyle}" Content="{Binding ShortDescription}" Foreground="#FFC1C1C1" FontSize="17" />
                             </StackPanel>
-                            <Image Style="{StaticResource ImageStyle}" Visibility="{Binding IsSRCProhibited, Converter={StaticResource BooleanToVisibilityConverter}}" DockPanel.Dock="Right" Source="images/src_prohibited.png" Width="50" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 10, 20, 0" />
+                            
+                            <Image Style="{StaticResource IconImageStyle}" Visibility="{Binding IsSRCProhibited, Converter={StaticResource BooleanToVisibilityConverter}}" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 10, 20, 0" Source="images/src_prohibited.png" />
                         </DockPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+
 
             <Border Style="{StaticResource BorderStyle}" Grid.Column="1" Margin="15, 0, 0, 0">
                 <ContentControl x:Name="DetailsContentControl" Content="{Binding Details}" d:DataContext="{StaticResource ModViewModelTemplate}">
@@ -227,7 +208,6 @@
                                 </Border>
 
                                 <TextBlock Style="{StaticResource TextBlockStyle}" DockPanel.Dock="Top" Text="{Binding Description}" Margin="15" />
-
                                 <TextBlock Style="{StaticResource TextBlockStyle}" DockPanel.Dock="Top" Text="{Binding Warning}"  Margin="15, 0, 15, 15" Foreground="#B83A3A" />
 
                                 <Grid  DockPanel.Dock="Bottom">
@@ -240,10 +220,10 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <Button Style="{StaticResource IconButtonStyle}" Grid.Column="0" x:Name="InstallButton" VerticalAlignment="Bottom" Margin="0, 0, 0, 20" IsEnabled="{Binding IsInstalled, Converter={StaticResource InvertBooleanConverter}}">
+                                    <Button Style="{StaticResource IconButtonStyle}" Grid.Column="0" x:Name="InstallButton" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 0, 0, 20" IsEnabled="{Binding IsInstalled, Converter={StaticResource InvertBooleanConverter}}">
                                         <Image Source="images/install.png" />
                                     </Button>
-                                    <Button Style="{StaticResource IconButtonStyle}" Grid.Column="2" x:Name="UninstallButton" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="0, 0, 0, 20" IsEnabled="{Binding IsInstalled}">
+                                    <Button Style="{StaticResource IconButtonStyle}" Grid.Column="2" x:Name="UninstallButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0, 0, 0, 20" IsEnabled="{Binding IsInstalled}">
                                         <Image Source="images/uninstall.png" />
                                     </Button>
                                 </Grid>
@@ -254,6 +234,8 @@
             </Border>
         </Grid>
 
+        
+        
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -269,6 +251,7 @@
 
             <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" Grid.Column="0" Content="Uninstall All" />
 
+            
             <Label Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.Column="3" Content="V0.1" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="18" />
         </Grid>
     </Grid>
