@@ -51,5 +51,16 @@ namespace TeardownTools.ViewModels
             Preview = new BitmapImage(new Uri(@"/images/placeholder.png", UriKind.Relative));
             Warning = string.Empty;
         }
+
+        public ModViewModel()
+        {
+            Name = "Name";
+            ShortDescription = "Short description.";
+            Description = "Description.";
+            IsSRCProhibited = false;
+            IsInstalled = false;
+            Preview = new BitmapImage(new Uri(@"/images/placeholder.png", UriKind.Relative));
+            Warning = string.Empty;
+        }
     }
 }

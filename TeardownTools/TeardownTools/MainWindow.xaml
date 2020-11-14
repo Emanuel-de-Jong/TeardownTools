@@ -15,9 +15,6 @@
 
 
     <Window.Resources>
-        <templates:ModViewModelTemplate x:Key="ModViewModelTemplate"/>
-
-
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:InvertBooleanConverter x:Key="InvertBooleanConverter" />
         <converters:CombiningConverter x:Key="InvertBooleanToVisibilityConverter" Converter1="{StaticResource InvertBooleanConverter}" Converter2="{StaticResource BooleanToVisibilityConverter}" />
@@ -200,7 +197,7 @@
             </Grid.ColumnDefinitions>
 
             <ListBox x:Name="ModListBox" Style="{StaticResource ListBoxStyle}" Grid.Column="0" ItemsSource="{Binding ModViewModels}" 
-                     d:DataContext="{StaticResource ModViewModelTemplate}" SelectionChanged="ModListBox_SelectionChanged">
+                     d:DataContext="{d:DesignInstance Type=templates:ModViewModelTemplate, IsDesignTimeCreatable=True}" SelectionChanged="ModListBox_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <DockPanel>
@@ -224,7 +221,8 @@
 
 
             <Border Style="{StaticResource BorderStyle}" Grid.Column="1" Margin="15, 0, 0, 0">
-                <ContentControl x:Name="DetailsContentControl" Content="{Binding Details}" d:DataContext="{StaticResource ModViewModelTemplate}">
+                <ContentControl x:Name="DetailsContentControl" Content="{Binding Details}" 
+                                d:DataContext="{d:DesignInstance Type=templates:ModViewModelTemplate, IsDesignTimeCreatable=True}">
                     <ContentControl.ContentTemplate>
                         <DataTemplate>
                             <DockPanel Background="{StaticResource Gray}">
