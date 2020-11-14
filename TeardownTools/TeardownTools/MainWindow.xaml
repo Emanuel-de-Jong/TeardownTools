@@ -17,7 +17,8 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:InvertBooleanConverter x:Key="InvertBooleanConverter" />
-        <converters:CombiningConverter x:Key="InvertBooleanToVisibilityConverter" Converter1="{StaticResource InvertBooleanConverter}" Converter2="{StaticResource BooleanToVisibilityConverter}" />
+        <converters:CombiningConverter x:Key="InvertBooleanToVisibilityConverter" 
+            Converter1="{StaticResource InvertBooleanConverter}" Converter2="{StaticResource BooleanToVisibilityConverter}" />
 
 
         <SolidColorBrush x:Key="Text" Color="#C1C1C1" />
@@ -33,20 +34,27 @@
 
         <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}" x:Key="TextBlockStyle">
             <Setter Property="Foreground" Value="{StaticResource Text}"/>
-            <Setter Property="FontSize" Value="20"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="19"/>
+        </Style>
+
+        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}" x:Key="TitleTextBlockStyle">
+            <Setter Property="Foreground" Value="{StaticResource Text}"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontWeight" Value="Bold"/>
         </Style>
 
         <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}" x:Key="LabelStyle">
             <Setter Property="Foreground" Value="{StaticResource Text}"/>
-            <Setter Property="FontSize" Value="20"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="19"/>
         </Style>
 
         <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}" x:Key="TitleLabelStyle">
             <Setter Property="Foreground" Value="{StaticResource Text}"/>
-            <Setter Property="FontSize" Value="25"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="25"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
 
@@ -226,15 +234,15 @@
                     <ContentControl.ContentTemplate>
                         <DataTemplate>
                             <DockPanel Background="{StaticResource Gray}">
-                                <Label Style="{StaticResource TitleLabelStyle}" DockPanel.Dock="Top" Content="{Binding Name}" HorizontalAlignment="Center" 
-                                       FontSize="28" Margin="0, 10" />
+                                <TextBlock Style="{StaticResource TitleTextBlockStyle}" DockPanel.Dock="Top" Text="{Binding Name}" TextAlignment="Center"
+                                           FontSize="28" Margin="5, 10, 5, 0" />
 
-                                <Border Style="{StaticResource BorderStyle}" DockPanel.Dock="Top" Margin="10, 0">
+                                <Border Style="{StaticResource BorderStyle}" DockPanel.Dock="Top" Margin="10, 10, 10, 0">
                                     <Image Style="{StaticResource ImageStyle}" Source="{Binding Preview}" />
                                 </Border>
 
-                                <TextBlock Style="{StaticResource TextBlockStyle}" DockPanel.Dock="Top" Text="{Binding Description}" Margin="15" />
-                                <TextBlock Style="{StaticResource TextBlockStyle}" DockPanel.Dock="Top" Text="{Binding Warning}"  Margin="15, 0, 15, 15" 
+                                <TextBlock Style="{StaticResource TextBlockStyle}" DockPanel.Dock="Top" Text="{Binding Description}" Margin="15, 10, 15, 0" />
+                                <TextBlock Style="{StaticResource TextBlockStyle}" DockPanel.Dock="Top" Text="{Binding Warning}"  Margin="15, 15, 15, 0" 
                                            Foreground="{StaticResource Red}" />
 
                                 <Grid  DockPanel.Dock="Bottom">
@@ -247,14 +255,14 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <Button Style="{StaticResource IconButtonStyle}" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
-                                            Margin="0, 0, 0, 20" IsEnabled="{Binding IsInstalled, Converter={StaticResource InvertBooleanConverter}}"
-                                            x:Name="InstallButton" Click="InstallButton_Click">
+                                    <Button x:Name="InstallButton" Style="{StaticResource IconButtonStyle}" Grid.Column="0" HorizontalAlignment="Right" 
+                                            VerticalAlignment="Bottom" Margin="0, 0, 0, 20" IsEnabled="{Binding IsInstalled, Converter={StaticResource InvertBooleanConverter}}"
+                                            Click="InstallButton_Click">
                                         <Image Source="images/install.png" />
                                     </Button>
-                                    <Button Style="{StaticResource IconButtonStyle}" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
-                                            Margin="0, 0, 0, 20" IsEnabled="{Binding IsInstalled}"
-                                            x:Name="UninstallButton" Click="UninstallButton_Click">
+                                    <Button x:Name="UninstallButton" Style="{StaticResource IconButtonStyle}" Grid.Column="2" HorizontalAlignment="Left" 
+                                            VerticalAlignment="Bottom" Margin="0, 0, 0, 20" IsEnabled="{Binding IsInstalled}"
+                                            Click="UninstallButton_Click">
                                         <Image Source="images/uninstall.png" />
                                     </Button>
                                 </Grid>
@@ -280,7 +288,8 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" Grid.Column="0" Content="Uninstall All" />
+            <Button x:Name="UninstallAllButton" Style="{StaticResource ButtonStyle}" Grid.Row="1" Grid.Column="0" Content="Uninstall All"
+                    Click="UninstallAllButton_Click"/>
 
 
             <Label Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.Column="3" Content="V0.1" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="18" />

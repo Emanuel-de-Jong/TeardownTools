@@ -11,15 +11,104 @@ namespace TeardownTools.ViewModels
 {
     public class ModViewModel : INotifyPropertyChanged
     {
-        public string Name { get; set; }
-        public string ShortDescription { get; set; }
-        public string Description { get; set; }
-        public string Warning { get; set; }
-        public bool IsSRCProhibited { get; set; }
-        public bool IsInstalled { get; set; }
-        public BitmapImage Preview { get; set; }
+        // FIELDS
+        private string name;
+        private string shortDescription;
+        private string description;
+        private string warning;
+        private bool isSRCProhibited;
+        private bool isInstalled;
+        private BitmapImage preview;
 
 
+        // PROPERTIES
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                if (name != value)
+                {
+                    name = value;
+                    OnPropertyChanged("Name");
+                }
+            }
+        }
+        public string ShortDescription
+        {
+            get { return shortDescription; }
+            set
+            {
+                if (shortDescription != value)
+                {
+                    shortDescription = value;
+                    OnPropertyChanged("ShortDescription");
+                }
+            }
+        }
+        public string Description
+        {
+            get { return description; }
+            set
+            {
+                if (description != value)
+                {
+                    description = value;
+                    OnPropertyChanged("Description");
+                }
+            }
+        }
+        public string Warning
+        {
+            get { return warning; }
+            set
+            {
+                if (warning != value)
+                {
+                    warning = value;
+                    OnPropertyChanged("Warning");
+                }
+            }
+        }
+        public bool IsSRCProhibited
+        {
+            get { return isSRCProhibited; }
+            set
+            {
+                if (isSRCProhibited != value)
+                {
+                    isSRCProhibited = value;
+                    OnPropertyChanged("IsSRCProhibited");
+                }
+            }
+        }
+        public bool IsInstalled
+        {
+            get { return isInstalled; }
+            set
+            {
+                if (isInstalled != value)
+                {
+                    isInstalled = value;
+                    OnPropertyChanged("IsInstalled");
+                }
+            }
+        }
+        public BitmapImage Preview
+        {
+            get { return preview; }
+            set
+            {
+                if (preview != value)
+                {
+                    preview = value;
+                    OnPropertyChanged("Preview");
+                }
+            }
+        }
+
+
+        // CONSTRUCTORS
         public ModViewModel(string _name, string _shortDescription, string _description, bool _isSRCProhibited, bool _isInstalled, string _previewPath, UriKind _previewPathScope, string _warning)
         {
             Name = _name;
@@ -30,7 +119,6 @@ namespace TeardownTools.ViewModels
             Preview = new BitmapImage(new Uri(_previewPath, _previewPathScope));
             Warning = _warning;
         }
-
         public ModViewModel(string _name, string _shortDescription, string _description, bool _isSRCProhibited, bool _isInstalled, string _previewPath, UriKind _previewPathScope)
         {
             Name = _name;
@@ -41,18 +129,6 @@ namespace TeardownTools.ViewModels
             Preview = new BitmapImage(new Uri(_previewPath, _previewPathScope));
             Warning = string.Empty;
         }
-
-        public ModViewModel(int _number)
-        {
-            Name = "Name " + _number;
-            ShortDescription = "Short description " + _number + ".";
-            Description = "Description " + _number + ".";
-            IsSRCProhibited = false;
-            IsInstalled = false;
-            Preview = new BitmapImage(new Uri(@"/images/placeholder.png", UriKind.Relative));
-            Warning = string.Empty;
-        }
-
         public ModViewModel()
         {
             Name = "Name";
@@ -65,6 +141,17 @@ namespace TeardownTools.ViewModels
         }
 
 
+        // METHODS
+        #region INotifyPropertyChanged Members
+
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
     }
 }

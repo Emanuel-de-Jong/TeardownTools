@@ -72,9 +72,11 @@ namespace TeardownTools
                     @"images\placeholder.png", UriKind.Relative),
             };
 
-            ModListBox.ItemsSource = ModViewModels;
             Details = ModViewModels[0];
+
+            ModListBox.ItemsSource = ModViewModels;
             ModListBox.SelectedItem = Details;
+
             DetailsContentControl.Content = Details;
         }
 
@@ -126,28 +128,28 @@ namespace TeardownTools
         {
             if(ModListBox.SelectedItem != null)
             {
-                ModViewModel item = ModListBox.SelectedItem as ModViewModel;
-
-                DetailsContentControl.Content = item;
+                DetailsContentControl.Content = ModListBox.SelectedItem as ModViewModel;
             }
         }
 
         private void InstallButton_Click(object sender, RoutedEventArgs e)
         {
-            ModViewModel item1 = DetailsContentControl.Content as ModViewModel;
-            ModViewModel item2 = ModListBox.SelectedItem as ModViewModel;
-
-            item1.IsInstalled = true;
-            item2.IsInstalled = true;
+            ModViewModel modViewModel = DetailsContentControl.Content as ModViewModel;
+            modViewModel.IsInstalled = true;
         }
 
         private void UninstallButton_Click(object sender, RoutedEventArgs e)
         {
-            ModViewModel item1 = DetailsContentControl.Content as ModViewModel;
-            ModViewModel item2 = ModListBox.SelectedItem as ModViewModel;
+            ModViewModel modViewModel = DetailsContentControl.Content as ModViewModel;
+            modViewModel.IsInstalled = false;
+        }
 
-            item1.IsInstalled = false;
-            item2.IsInstalled = false;
+        private void UninstallAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (ModViewModel modViewModel in ModViewModels)
+            {
+                modViewModel.IsInstalled = false;
+            }
         }
     }
 }
