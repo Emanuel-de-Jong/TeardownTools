@@ -131,5 +131,23 @@ namespace TeardownTools
                 DetailsContentControl.Content = item;
             }
         }
+
+        private void InstallButton_Click(object sender, RoutedEventArgs e)
+        {
+            ModViewModel item1 = DetailsContentControl.Content as ModViewModel;
+            ModViewModel item2 = ModListBox.SelectedItem as ModViewModel;
+
+            item1.IsInstalled = true;
+            item2.IsInstalled = true;
+        }
+
+        private void UninstallButton_Click(object sender, RoutedEventArgs e)
+        {
+            ModViewModel item1 = DetailsContentControl.Content as ModViewModel;
+            ModViewModel item2 = ModListBox.SelectedItem as ModViewModel;
+
+            item1.IsInstalled = false;
+            item2.IsInstalled = false;
+        }
     }
 }

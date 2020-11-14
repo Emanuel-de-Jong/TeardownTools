@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using System.Windows.Media.Imaging;
 
 namespace TeardownTools.ViewModels
 {
-    public class ModViewModel
+    public class ModViewModel : INotifyPropertyChanged
     {
         public string Name { get; set; }
         public string ShortDescription { get; set; }
@@ -62,5 +63,8 @@ namespace TeardownTools.ViewModels
             Preview = new BitmapImage(new Uri(@"/images/placeholder.png", UriKind.Relative));
             Warning = string.Empty;
         }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

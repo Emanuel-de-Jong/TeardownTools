@@ -248,11 +248,13 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Button Style="{StaticResource IconButtonStyle}" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
-                                            Margin="0, 0, 0, 20" IsEnabled="{Binding IsInstalled, Converter={StaticResource InvertBooleanConverter}}">
+                                            Margin="0, 0, 0, 20" IsEnabled="{Binding IsInstalled, Converter={StaticResource InvertBooleanConverter}}"
+                                            x:Name="InstallButton" Click="InstallButton_Click">
                                         <Image Source="images/install.png" />
                                     </Button>
                                     <Button Style="{StaticResource IconButtonStyle}" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
-                                            Margin="0, 0, 0, 20" IsEnabled="{Binding IsInstalled}">
+                                            Margin="0, 0, 0, 20" IsEnabled="{Binding IsInstalled}"
+                                            x:Name="UninstallButton" Click="UninstallButton_Click">
                                         <Image Source="images/uninstall.png" />
                                     </Button>
                                 </Grid>
