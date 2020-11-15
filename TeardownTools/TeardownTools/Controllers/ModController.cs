@@ -13,6 +13,10 @@ namespace TeardownTools.Controllers
 {
     public static class ModController
     {
+        // CONSTANTS
+        private const string TDTOOLSTEMPLATE = "TDTools = {\n}";
+
+
         // FIELDS
         private static string teardownPath = GetTeardownPath();
         private static string tDToolsPath = teardownPath + "tdtools.lua";
@@ -22,15 +26,55 @@ namespace TeardownTools.Controllers
 
         // PROPERTIES
         public static ModModel BaseMod { get; set; }
+        public static bool TDToolsExists
+        {
+            get { return tDToolsExists; }
+        }
 
 
         // PUBLIC METHODS
+        public static bool Update(List<ModModel> mods)
+        {
+            foreach (ModModel mod in mods)
+            {
+                if (mod.Version > GetVersion(mod))
+                {
+                    Uninstall(mod);
+                    Install(mod);
+                }
+            }
+            return true;
+        }
+
         public static bool Install(ModModel mod)
         {
             if (!tDToolsExists)
             {
                 CreateTDTools();
             }
+
+            string table = mod.Name.Replace(" ", "_") + " = {\n" +
+                "\t-- version: " + GetVersion(mod) + "\n";
+
+            int count;
+            foreach (KeyValuePair<string, List<ChangeModel>> kv in mod.Changes)
+            {
+                count = 1;
+                foreach (ChangeModel change in kv.Value)
+                {
+                    table += "\t" + PathToFunctionName(kv.Key, count) + " = function()\n";
+
+                    foreach (string code in change.Code)
+                    {
+                        table += "\t\t" + code + "\n";
+                    }
+
+                    table += "\tend,\n";
+
+                    count++;
+                }
+            }
+
             return true;
         }
 
@@ -39,7 +83,7 @@ namespace TeardownTools.Controllers
             return true;
         }
 
-        public static bool UninstallAll(ModModel mod)
+        public static bool UninstallAll()
         {
             if (tDToolsExists)
             {
@@ -48,30 +92,19 @@ namespace TeardownTools.Controllers
             return true;
         }
 
-        public static bool Update(ModModel mod)
+        public static bool CheckInstalled(ModModel mod)
         {
-            if (tDToolsExists)
-            {
-                if (CheckModInstalled(mod))
-                {
-                    if (mod.Version > GetModVersion(mod))
-                    {
-                        Uninstall(mod);
-                        Install(mod);
-                    }
-                }
-            }
             return true;
         }
 
 
         // PRIVATE METHODS
-        private static bool CheckModInstalled(ModModel mod)
+        private static string PathToFunctionName(string path, int count)
         {
-            return true;
+            return path.Substring(0, path.Length - 4).Replace("\\", "_") + "_" + count;
         }
 
-        private static float GetModVersion(ModModel mod)
+        private static float GetVersion(ModModel mod)
         {
             return 1.0f;
         }
