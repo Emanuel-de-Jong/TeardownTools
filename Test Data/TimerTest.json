@@ -1,0 +1,63 @@
+{
+	"Id": 27962,
+	"Name": "Timer",
+	"Version": 1.0,
+	"ShortDescription": "Display your in-game time on the screen.",
+	"Description": "Display your setup time at the top right of the screen during gameplay. Can be toggled off in the gameplay menu.",
+	"Warning": null,
+	"IsSRCProhibited": false,
+	"PreviewPath": "Timer.png",
+	"Changes": {
+		"ui/hud.lua": [
+			{
+				"FunctionName": "init",
+				"Before": [
+					"gHintInfoScale = 0",
+					"gHintInfo = \"\""
+				],
+				"After": [
+					"",
+					"gMissionId = GetString(\"game.levelid\")"
+				],
+				"Code": [
+					"result = DoTheThing()",
+					"if result then",
+					"print(\"huray!\")",
+					"end"
+				]
+			},
+			{
+				"FunctionName": null,
+				"Before": [
+					"#include \"map.lua\"",
+					"#include \"about.lua\"",
+					"#include \"debug.lua\""
+				],
+				"After": null,
+				"Code": [
+					"result = 2 + 2",
+					"for i = result, 5 do",
+					"print(\"yaruh!\")",
+					"end"
+				]
+			}
+		],
+		"game.lua" : [
+			{
+				"FunctionName": null,
+				"Before": [
+					"-- Tools",
+					"------------------------------------------------------------------------------"
+				],
+				"After": [
+					"",
+					"",
+					"gTools = "
+				],
+				"Code": [
+					"-- These are the tools"
+				]
+			}
+		]
+	}
+}

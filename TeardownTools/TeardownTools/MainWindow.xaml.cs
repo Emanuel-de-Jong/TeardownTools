@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TeardownTools.ViewModels;
 using TeardownTools.Templates;
+using TeardownTools.Controllers;
 
 namespace TeardownTools
 {
@@ -27,6 +28,8 @@ namespace TeardownTools
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+
+            DataController dc = new DataController();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

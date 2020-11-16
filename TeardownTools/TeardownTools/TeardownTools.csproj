@@ -67,6 +67,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\ModController.cs" />
     <Compile Include="Converters\CombiningConverter.cs" />
     <Compile Include="Converters\InvertBooleanConverter.cs" />
