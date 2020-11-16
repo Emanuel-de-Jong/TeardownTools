@@ -53,7 +53,7 @@ namespace TeardownTools.Controllers
                 CreateTDTools();
             }
 
-            string table = mod.Name.Replace(" ", "_") + " = {\n" +
+            string table = "m" + mod.Id + " = {\n" +
                 "\t-- version: " + GetVersion(mod) + "\n";
 
             int count;

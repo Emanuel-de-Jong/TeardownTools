@@ -13,7 +13,7 @@ namespace TeardownTools.Models
 
 
         // PROPERTIES
-        public string Name { get; set; }
+        public int Id { get; set; }
         public double Version { get; set; }
         public Dictionary<string, List<ChangeModel>> Changes
         {
@@ -23,21 +23,21 @@ namespace TeardownTools.Models
 
 
         // CONSTRUCTORS
-        public ModModel(string _name, double _version, Dictionary<string, List<ChangeModel>> _changes)
+        public ModModel(int _id, double _version, Dictionary<string, List<ChangeModel>> _changes)
         {
-            Name = _name;
+            Id = _id;
             Version = _version;
             changes = _changes;
         }
-        public ModModel(string _name, double _version)
+        public ModModel(int _id, double _version)
         {
-            Name = _name;
+            Id = _id;
             Version = _version;
             changes = new Dictionary<string, List<ChangeModel>>();
         }
         public ModModel()
         {
-            Name = string.Empty;
+            Id = 0;
             Version = 0;
             changes = new Dictionary<string, List<ChangeModel>>();
         }
