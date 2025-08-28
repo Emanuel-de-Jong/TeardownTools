@@ -7,3 +7,4 @@ Search for, install and manage [Teardown](https://teardowngame.com/) mods using 
 | | |
 | :---: | :---: |
 | ![](/Screenshots/1-Main_Window.png) | ![](/Screenshots/.png) |
+ 
